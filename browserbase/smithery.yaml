@@ -50,3 +50,5 @@ startCommand:
         BROWSERBASE_PROJECT_ID: config.browserbaseProjectId
       }
     })
+
+runtime: typescript

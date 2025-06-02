@@ -1,9 +1,10 @@
 {
   "name": "@browserbasehq/mcp",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "MCP server for browser automation using browserbase",
   "author": "Browserbase, Inc. (https://browserbase.com)",
   "homepage": "https://browserbase.com",
+  "module": "./cli.js",
   "type": "module",
   "main": "./cli.js",
   "engines": {
@@ -35,6 +36,7 @@
   "dependencies": {
     "@browserbasehq/sdk": "^2.5.0",
     "@modelcontextprotocol/sdk": "^1.10.2",
+    "@smithery/cli": "^1.2.4",
     "@types/yaml": "^1.9.6",
     "commander": "^13.1.0",
     "dotenv": "^16.5.0",
