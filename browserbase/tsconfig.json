@@ -11,6 +11,6 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/smithery.js"],
   "exclude": ["node_modules"]
 }

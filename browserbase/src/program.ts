@@ -10,9 +10,18 @@ import { createStatefulServer } from '@smithery/sdk/server/stateful.js'
 
 import { resolveConfig } from './config.js';
 
-// Determine the directory of the current module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+let __filename: string;
+let __dirname: string;
+
+try {
+  // Try ES modules first
+  __filename = fileURLToPath(import.meta.url);
+  __dirname = path.dirname(__filename);
+} catch {
+  // Fallback for CommonJS or when import.meta is not available
+  __filename = (globalThis as any).__filename || process.cwd() + '/dist/program.js';
+  __dirname = path.dirname(__filename);
+}
 
 // Load package.json using fs
 const packageJSONPath = path.resolve(__dirname, '../package.json');
@@ -43,7 +52,7 @@ program
 
       if (options.port) {
         createStatefulServer(() => createServerFunction({ config }))
-        .app.listen(+options.port, options.host);
+        .app.listen(+options.port, options.host ?? 'localhost');
       } else {
         await startStdioTransport(serverList);
 

@@ -1,8 +1,8 @@
 # Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
 
 startCommand:
-  # Using stdio type which is the most common for MCPs
-  type: stdio
+  # Using http type 
+  type: http
   configSchema:
     # JSON Schema defining the configuration options for the MCP.
     type: object
@@ -47,11 +47,11 @@ startCommand:
   commandFunction: |
     config => ({
       command: 'node',
-      args: ['cli.js'],
+      args: ['smithery.js'],
       env: {
         BROWSERBASE_API_KEY: config.browserbaseApiKey,
         BROWSERBASE_PROJECT_ID: config.browserbaseProjectId
       }
     })
 
-runtime: "typescript"
+runtime: "container"

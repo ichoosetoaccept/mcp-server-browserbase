@@ -40,4 +40,4 @@ ENV BROWSERBASE_API_KEY=<YOUR_BROWSERBASE_API_KEY>
 ENV BROWSERBASE_PROJECT_ID=<YOUR_BROWSERBASE_PROJECT_ID>
 
 # Command to run the application with absolute path
-ENTRYPOINT [ "node", "/app/cli.js" ] 
+ENTRYPOINT [ "node", "/app/smithery.js" ] 
