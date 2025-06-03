@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN npm install
 RUN npm run build
 
 # Create the final image from a smaller Node.js runtime
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Set the working directory
 WORKDIR /app
@@ -40,4 +40,4 @@ ENV BROWSERBASE_API_KEY=<YOUR_BROWSERBASE_API_KEY>
 ENV BROWSERBASE_PROJECT_ID=<YOUR_BROWSERBASE_PROJECT_ID>
 
 # Command to run the application with absolute path
-ENTRYPOINT [ "node", "/app/smithery.js" ] 
+ENTRYPOINT [ "node", "/app/dist/smithery.js" ] 

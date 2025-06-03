@@ -47,7 +47,7 @@ startCommand:
   commandFunction: |
     config => ({
       command: 'node',
-      args: ['smithery.js'],
+      args: ['dist/smithery.js'],
       env: {
         BROWSERBASE_API_KEY: config.browserbaseApiKey,
         BROWSERBASE_PROJECT_ID: config.browserbaseProjectId

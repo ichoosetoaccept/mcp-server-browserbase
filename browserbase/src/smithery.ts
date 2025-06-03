@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-import createServerFunction from './src/index.js';
+import createServerFunction, { configSchema } from './index.js';
 import { createStatefulServer } from '@smithery/sdk/server/stateful.js'
 
-import { ServerList } from './src/server.js';
+import { ServerList } from './server.js';
+import { z } from "zod";
 
-export default async function main({ config }) {
+export default function ({ config }: { config: z.infer<typeof configSchema> }) {
   const serverList = new ServerList(async() => {
     return createServerFunction({ config });
     });
@@ -16,7 +17,7 @@ export default async function main({ config }) {
   })
 }
 
-function setupExitWatchdog(serverList) {
+function setupExitWatchdog(serverList: ServerList) {
   const handleExit = async () => {
     setTimeout(() => process.exit(0), 15000);
     await serverList.closeAll();
@@ -27,5 +28,3 @@ function setupExitWatchdog(serverList) {
   process.on('SIGINT', handleExit);
   process.on('SIGTERM', handleExit);
 }
-
-main({})

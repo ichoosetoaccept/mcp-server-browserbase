@@ -3,7 +3,6 @@ dotenv.config();
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { zodToJsonSchema } from 'zod-to-json-schema';
 import type { Tool } from "./tools/tool.js";
 
 import navigate from "./tools/navigate.js";
