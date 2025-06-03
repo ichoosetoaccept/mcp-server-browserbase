@@ -55,3 +55,6 @@ startCommand:
     })
 
 runtime: "container"
+build:
+  dockerfile: "Dockerfile"
+  dockerBuildPath: "."

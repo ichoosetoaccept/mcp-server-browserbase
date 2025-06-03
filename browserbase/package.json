@@ -4,7 +4,7 @@
   "description": "MCP server for browser automation using browserbase",
   "author": "Browserbase, Inc. (https://browserbase.com)",
   "homepage": "https://browserbase.com",
-  "module": "./cli.js",
+  "module": "./dist/smithery.js",
   "type": "module",
   "main": "./cli.js",
   "engines": {
