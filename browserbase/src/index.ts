@@ -76,33 +76,27 @@ export default function ({ config }: { config: z.infer<typeof configSchema> }) {
 
   // Register each tool with the Smithery server
   tools.forEach(tool => {
-    let finalInputSchema;
-    // Check if inputSchema is a Zod schema before converting 
-    if (tool.schema.inputSchema instanceof z.Schema) {
-      finalInputSchema = zodToJsonSchema(tool.schema.inputSchema as any);
-    } else if (typeof tool.schema.inputSchema === 'object' && tool.schema.inputSchema !== null) {
-      finalInputSchema = tool.schema.inputSchema;
-    } else {
-      console.error(`Warning: Tool '${tool.schema.name}' has an unexpected inputSchema type.`);
-      finalInputSchema = { type: "object" }; // Default to empty object schema
-    }
-
-    server.tool(
-      tool.schema.name,
-      tool.schema.description,
-      finalInputSchema,
-      async (params: any) => {
-        try {
-          // Pass the original tool object to context.run - it will handle validation with the original Zod schema
-          const result = await context.run(tool, params.arguments ?? {});
-          return result;
-        } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : String(error);
-          process.stderr.write(`[Smithery Error] ${new Date().toISOString()} Error running tool ${tool.schema.name}: ${errorMessage}\n`);
-          throw new Error(`Failed to run tool '${tool.schema.name}': ${errorMessage}`);
+    if (tool.schema.inputSchema instanceof z.ZodObject) {
+      server.tool(
+        tool.schema.name,
+        tool.schema.description,
+        tool.schema.inputSchema.shape,
+        async (params: z.infer<typeof tool.schema.inputSchema>) => {
+          try {
+            const result = await context.run(tool, params);
+            return result;
+          } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            process.stderr.write(`[Smithery Error] ${new Date().toISOString()} Error running tool ${tool.schema.name}: ${errorMessage}\n`);
+            throw new Error(`Failed to run tool '${tool.schema.name}': ${errorMessage}`);
+          }
         }
-      }
-    );
+      );
+    } else {
+      console.warn(
+        `Tool "${tool.schema.name}" has an input schema that is not a ZodObject. Schema type: ${tool.schema.inputSchema.constructor.name}`
+      );
+    }
   });
 
   return server.server;
