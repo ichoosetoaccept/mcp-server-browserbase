@@ -18,8 +18,8 @@ import type { Config } from "./config.js";
 
 // Configuration schema for Smithery - matches existing Config interface
 export const configSchema = z.object({
-  browserbaseApiKey: z.string().optional().describe("The Browserbase API Key to use"),
-  browserbaseProjectId: z.string().optional().describe("The Browserbase Project ID to use"),
+  browserbaseApiKey: z.string().describe("The Browserbase API Key to use"),
+  browserbaseProjectId: z.string().describe("The Browserbase Project ID to use"),
   proxies: z.boolean().optional().describe("Whether or not to use Browserbase proxies"),
   advancedStealth: z.boolean().optional().describe("Use advanced stealth mode. Only available to Browserbase Scale Plan users"),
   context: z.object({
