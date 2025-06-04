@@ -18,8 +18,8 @@ import type { Config } from "./config.js";
 
 // Configuration schema for Smithery - matches existing Config interface
 export const configSchema = z.object({
-  browserbaseApiKey: z.string().describe("The Browserbase API Key to use"),
-  browserbaseProjectId: z.string().describe("The Browserbase Project ID to use"),
+  browserbaseApiKey: z.string().optional().describe("The Browserbase API Key to use"),
+  browserbaseProjectId: z.string().optional().describe("The Browserbase Project ID to use"),
   proxies: z.boolean().optional().describe("Whether or not to use Browserbase proxies"),
   advancedStealth: z.boolean().optional().describe("Use advanced stealth mode. Only available to Browserbase Scale Plan users"),
   context: z.object({
@@ -53,6 +53,13 @@ export const configSchema = z.object({
 
 // Default function for Smithery
 export default function ({ config }: { config: z.infer<typeof configSchema> }) {
+  if (!config.browserbaseApiKey) {
+    throw new Error('browserbaseApiKey is required');
+  }
+  if (!config.browserbaseProjectId) {
+    throw new Error('browserbaseProjectId is required');
+  }
+
   const server = new McpServer({
     name: 'Browserbase MCP Server',
     version: '1.0.6'
