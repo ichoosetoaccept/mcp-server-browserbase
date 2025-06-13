@@ -8,9 +8,9 @@ const observeTool: ToolFactory = captureSnapshot => defineTool({
 
   schema: {
     name: 'browserbase_stagehand_observe',
-    description: 'Observe the page and get suggested actions using Stagehand',
+    description: 'Observes elements on the web page. Use this tool to observe elements that you can later use in an action. Use observe instead of extract when dealing with actionable (interactable) elements rather than text. More often than not, you\'ll want to use extract instead of observe when dealing with scraping or extracting structured text.',
     inputSchema: z.object({
-      instruction: z.string().describe('What to observe or what action to plan'),
+      instruction: z.string().describe('Instruction for observation (e.g., \'find the login button\'). This instruction must be extremely specific.'),
     }),
   },
 
