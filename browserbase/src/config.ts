@@ -9,6 +9,7 @@ export type ToolCapability = 'core' | string;
 export interface Config {
   browserbaseApiKey?: string; 
   browserbaseProjectId?: string; 
+  openaiApiKey?: string;
   server?: {
     port?: number;
     host?: string;
@@ -24,12 +25,14 @@ export interface Config {
     browserHeight?: number;
   };
   cookies?: Cookie[]; 
+  stagehandTools?: boolean;
 }
 
 // Define Command Line Options Structure
 export type CLIOptions = {
   browserbaseApiKey?: string;
   browserbaseProjectId?: string;
+  openaiApiKey?: string;
   proxies?: boolean;
   advancedStealth?: boolean;
   contextId?: string;
@@ -39,12 +42,14 @@ export type CLIOptions = {
   cookies?: Cookie[];
   browserWidth?: number;
   browserHeight?: number;
+  stagehandTools?: boolean;
 };
 
 // Default Configuration Values
 const defaultConfig: Config = {
   browserbaseApiKey: process.env.BROWSERBASE_API_KEY,
   browserbaseProjectId: process.env.BROWSERBASE_PROJECT_ID,
+  openaiApiKey: process.env.OPENAI_API_KEY,
   proxies: false,
   server: {
     port: undefined,
@@ -55,6 +60,7 @@ const defaultConfig: Config = {
     browserHeight: 768,
   },
   cookies: undefined,
+  stagehandTools: false,
 };
 
 // Resolve final configuration by merging defaults, file config, and CLI options
@@ -71,6 +77,9 @@ export async function resolveConfig(cliOptions: CLIOptions): Promise<Config> {
   if (!mergedConfig.browserbaseProjectId) {
     mergedConfig.browserbaseProjectId = process.env.BROWSERBASE_PROJECT_ID;
   }
+  if (!mergedConfig.openaiApiKey) {
+    mergedConfig.openaiApiKey = process.env.OPENAI_API_KEY;
+  }
   // --------------------------------
 
   // Basic validation for Browserbase keys
@@ -81,6 +90,10 @@ export async function resolveConfig(cliOptions: CLIOptions): Promise<Config> {
       console.warn("Warning: BROWSERBASE_PROJECT_ID environment variable not set.");
   }
 
+  if (!mergedConfig.openaiApiKey && mergedConfig.stagehandTools) {
+    throw new Error("OPENAI_API_KEY environment variable not set. Needed for Stagehand tools.");
+  }
+
   return mergedConfig;
 }
 
@@ -89,6 +102,7 @@ export async function configFromCLIOptions(cliOptions: CLIOptions): Promise<Conf
  return {
     browserbaseApiKey: cliOptions.browserbaseApiKey,
     browserbaseProjectId: cliOptions.browserbaseProjectId,
+    openaiApiKey: cliOptions.openaiApiKey,
     server: {
       port: cliOptions.port,
       host: cliOptions.host,
@@ -104,6 +118,7 @@ export async function configFromCLIOptions(cliOptions: CLIOptions): Promise<Conf
     },
     advancedStealth: cliOptions.advancedStealth,
     cookies: cliOptions.cookies,
+    stagehandTools: cliOptions.stagehandTools,
   };
 }
 

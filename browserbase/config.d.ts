@@ -9,6 +9,10 @@ export type Config = {
      * The Browserbase Project ID to use
      */
     browserbaseProjectId?: string;
+    /**
+     * The OpenAI API Key to use for Stagehand tools
+     */
+    openaiApiKey?: string;
     /** 
      * Whether or not to use Browserbase proxies  
      * https://docs.browserbase.com/features/proxies
@@ -82,4 +86,10 @@ export type Config = {
             omitBase64?: boolean;
         }
     }
+    /**
+     * Whether or not to use Stagehand tools
+     * 
+     * @default false
+     */
+    stagehandTools?: boolean;
 };

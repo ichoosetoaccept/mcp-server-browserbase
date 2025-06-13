@@ -30,6 +30,7 @@ export class Context {
   private server: Server;
   public readonly config: Config;
   public currentSessionId: string = defaultSessionId;
+  private browserbaseSessionId: string = "";
   private latestSnapshots = new Map<string, PageSnapshot>();
   private screenshotResources = new Map<
     string,
@@ -40,6 +41,23 @@ export class Context {
     this.server = server;
     this.config = config;
     this.screenshotResources = new Map();
+  }
+
+  // --- Session Management Methods ---
+
+  /**
+   * Sets the browserbase session ID for the current session.
+   * This should be called when a new browserbase session is created.
+   */
+  public setBrowserbaseSessionId(sessionId: string): void {
+    this.browserbaseSessionId = sessionId;
+  }
+
+  /**
+   * Gets the current browserbase session ID.
+   */
+  public getBrowserbaseSessionId(): string {
+    return this.browserbaseSessionId;
   }
 
   // --- Snapshot State Handling (Using PageSnapshot) ---

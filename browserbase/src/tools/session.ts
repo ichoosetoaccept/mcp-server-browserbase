@@ -65,7 +65,12 @@ async function handleCreateSession(
         );
       }
 
+      // Session ID for the MCP 
       context.currentSessionId = targetSessionId;
+      
+      // Browserbase Session ID (Only needed for Stagehand currently)
+      context.setBrowserbaseSessionId(session.sessionId);
+      
       process.stderr.write(
         `[tool.connected] Successfully connected to Browserbase session. Internal ID: ${targetSessionId}, Actual ID: ${session.sessionId}`
       );
@@ -188,6 +193,10 @@ async function handleCloseSession(
     // and clear snapshot if the previous session was a specific one.
     const oldContextSessionId = context.currentSessionId; // This should effectively be 'previousSessionId'
     context.currentSessionId = defaultSessionId;
+    
+    // Clear the browserbase session ID when closing the session
+    context.setBrowserbaseSessionId("");
+    
     if (oldContextSessionId && oldContextSessionId !== defaultSessionId) {
       context.clearLatestSnapshot();
       process.stderr.write(

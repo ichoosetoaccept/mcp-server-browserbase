@@ -24,6 +24,7 @@ program
     .name(packageJSON.name)
     .option('--browserbaseApiKey <key>', 'The Browserbase API Key to use')
     .option('--browserbaseProjectId <id>', 'The Browserbase Project ID to use')
+    .option('--openaiApiKey <key>', 'The OpenAI API Key to use')
     .option('--proxies', 'Use Browserbase proxies.')
     .option('--advancedStealth', 'Use advanced stealth mode. Only available to Browserbase Scale Plan users.')
     .option('--contextId <contextId>', 'Browserbase Context ID to use.')
@@ -33,6 +34,7 @@ program
     .option('--cookies [json]', 'JSON array of cookies to inject into the browser. Format: [{"name":"cookie1","value":"val1","domain":"example.com"}, ...]')
     .option('--browserWidth <width>', 'Browser width to use for the browser.')
     .option('--browserHeight <height>', 'Browser height to use for the browser.')
+    .option('--stagehandTools', 'Use Stagehand tools.')
     .action(async options => {
       const config = await resolveConfig(options);
       const serverList = new ServerList(async() => createServer(config));

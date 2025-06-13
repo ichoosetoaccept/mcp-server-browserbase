@@ -16,6 +16,7 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { CallToolRequestSchema, ListResourcesRequestSchema, ListToolsRequestSchema, ReadResourceRequestSchema } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
+import stagehandTools from "./tools/stagehand/index.js";
 import { Context } from "./context.js";
 
 // Environment variables configuration
@@ -54,6 +55,7 @@ export async function createServer(config: Config): Promise<Server> {
     ...navigate,
     ...session,
     ...contextTools,
+    ...(config.stagehandTools ? stagehandTools : []),
   ];
 
   const toolsMap = new Map(tools.map(tool => [tool.schema.name, tool]));
