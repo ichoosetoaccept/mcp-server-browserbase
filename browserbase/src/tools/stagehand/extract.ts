@@ -22,7 +22,7 @@ const extractTool: ToolFactory = captureSnapshot => defineTool({
     }
 
     const browserbaseSessionId = context.getBrowserbaseSessionId();
-    const stagehand = await initStagehand(browserbaseSessionId);
+    const stagehand = await initStagehand(context, browserbaseSessionId);
     
     return {
       code: ['// Stagehand extract data operation performed'],

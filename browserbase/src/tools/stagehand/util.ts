@@ -1,10 +1,16 @@
 import { Stagehand } from "@browserbasehq/stagehand";
+import { Context } from "../../context.js";
 
-export async function initStagehand(browserbaseSessionID: string): Promise<Stagehand> {
+export async function initStagehand(context: Context, browserbaseSessionID: string): Promise<Stagehand> {
+    const { 
+        browserbaseApiKey, 
+        browserbaseProjectId,
+    } = context.config;
+
   const stagehand = new Stagehand({
     env: "BROWSERBASE",
-    apiKey: process.env.BROWSERBASE_API_KEY,
-    projectId: process.env.BROWSERBASE_PROJECT_ID,
+    apiKey: browserbaseApiKey,
+    projectId: browserbaseProjectId,
     browserbaseSessionID,
   });
 
