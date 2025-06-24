@@ -71,6 +71,7 @@ export const stagehandConfig: ConstructorParams = {
 
 // Global state
 let stagehand: Stagehand | undefined;
+let isInitialized = false;
 
 // Ensure Stagehand is initialized
 export async function ensureStagehand() {
@@ -84,9 +85,10 @@ export async function ensureStagehand() {
   }
 
   try {
-    if (!stagehand) {
+    if (!stagehand || !isInitialized) {
       stagehand = new Stagehand(stagehandConfig);
       await stagehand.init();
+      isInitialized = true;
       return stagehand;
     }
 
@@ -107,6 +109,7 @@ export async function ensureStagehand() {
         log("Browser session expired, reinitializing Stagehand...", "info");
         stagehand = new Stagehand(stagehandConfig);
         await stagehand.init();
+      isInitialized = true;
         return stagehand;
       }
       throw error; // Re-throw if it's a different type of error
@@ -114,6 +117,7 @@ export async function ensureStagehand() {
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error);
     log(`Failed to initialize/reinitialize Stagehand: ${errorMsg}`, "error");
+    isInitialized = false;
     throw error;
   }
 }
