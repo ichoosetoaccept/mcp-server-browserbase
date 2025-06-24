@@ -19,7 +19,7 @@ A Model Context Protocol (MCP) server that provides AI-powered web automation ca
       "env": {
         "BROWSERBASE_API_KEY": "<YOUR_BROWSERBASE_API_KEY>",
         "BROWSERBASE_PROJECT_ID": "<YOUR_BROWSERBASE_PROJECT_ID>",
-        "OPENAI_API_KEY": "<YOUR_OPENAI_API_KEY>",
+        "ANTHROPIC_API_KEY": "<YOUR_ANTHROPIC_API_KEY>",
         "CONTEXT_ID": "<YOUR_CONTEXT_ID>"
       }
     }
@@ -36,7 +36,7 @@ or, for running locally, first [**open Chrome in debug mode**](https://docs.stag
       "command": "node",
       "args": ["path/to/mcp-server-browserbase/stagehand/dist/index.js"],
       "env": {
-        "OPENAI_API_KEY": "<YOUR_OPENAI_API_KEY>",
+        "ANTHROPIC_API_KEY": "<YOUR_ANTHROPIC_API_KEY>",
         "LOCAL_CDP_URL": "http://localhost:9222"
       }
     }
@@ -169,7 +169,7 @@ Provides utility functions:
 
 - `BROWSERBASE_API_KEY`: API key for BrowserBase authentication
 - `BROWSERBASE_PROJECT_ID`: Project ID for BrowserBase
-- `OPENAI_API_KEY`: API key for OpenAI (used by Stagehand)
+- `ANTHROPIC_API_KEY`: API key for Anthropic (used by Stagehand)
 - `DEBUG`: Enable debug logging
 
 ## MCP Capabilities
