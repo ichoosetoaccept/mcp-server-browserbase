@@ -27,6 +27,12 @@ import {
   readResource,
 } from "./resources.js";
 
+// Debug environment variables
+console.error('Debug Environment Variables:');
+console.error('ANTHROPIC_API_KEY:', process.env.ANTHROPIC_API_KEY ? 'SET' : 'NOT SET');
+console.error('BROWSERBASE_API_KEY:', process.env.BROWSERBASE_API_KEY ? 'SET' : 'NOT SET');
+console.error('LOCAL_CDP_URL:', process.env.LOCAL_CDP_URL ? 'SET' : 'NOT SET');
+
 // Define Stagehand configuration
 export const stagehandConfig: ConstructorParams = {
   env:
